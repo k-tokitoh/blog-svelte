@@ -2,6 +2,8 @@ name: example
 
 on:
   push:
+    branches:
+      - main
 
 jobs:
   s3ls:
@@ -9,6 +11,8 @@ jobs:
     permissions:
       id-token: write
       contents: read
+    environment:
+      name: production
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
