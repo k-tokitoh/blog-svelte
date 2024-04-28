@@ -18,10 +18,10 @@
 	<a href="https://github.com/mvasigh/sveltekit-mdsvex-blog">View source code on Github.</a>
 </p>
 
-{#each data.posts as { slug, title, author, description, date }}
+{#each data.posts as { slug, title, description, date }}
 	<Article>
 		<ArticleTitle {slug} {title} />
-		<ArticleMeta {author} {date} />
+		<ArticleMeta {date} />
 		<ArticleDescription {description} {slug} />
 	</Article>
 {/each}
