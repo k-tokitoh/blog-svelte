@@ -1,18 +1,17 @@
 import type { PageServerLoad } from './$types';
-import { slugFromPath } from '$lib/slugFromPath';
+import { slugFromPath, dateFromPath } from '$lib/slugFromPath';
 
-const MAX_POSTS = 10;
+const MAX_POSTS = 1000;
 
-export const load: PageServerLoad = async ({ url }) => {
+export const load: PageServerLoad = async () => {
 	const modules = import.meta.glob(`/src/posts/*.{md,svx,svelte.md}`);
 
 	const postPromises = Object.entries(modules).map(([path, resolver]) =>
-		resolver().then(
-			(post) =>
-				({
-					slug: slugFromPath(path),
-					...(post as unknown as App.MdsvexFile).metadata
-				} as App.BlogPost)
+		resolver().then((post) =>
+			Object.assign((post as unknown as App.MdsvexFile).metadata, {
+				slug: slugFromPath(path),
+				date: dateFromPath(path)
+			})
 		)
 	);
 
