@@ -22,6 +22,14 @@ jobs:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
+      - name: setup node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+
+      - name: install packages
+        run: npm ci
+
       - name: build
         run: npm run build
 
