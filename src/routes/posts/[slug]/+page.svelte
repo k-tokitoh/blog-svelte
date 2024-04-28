@@ -14,6 +14,6 @@
 
 <PageHead title={data.frontmatter.title} description={data.frontmatter.description} />
 <ArticleTitle title={data.frontmatter.title} />
-<ArticleMeta author={data.frontmatter.author} date={data.frontmatter.date} />
+<ArticleMeta date={data.frontmatter.date} />
 
 <svelte:component this={component} />
