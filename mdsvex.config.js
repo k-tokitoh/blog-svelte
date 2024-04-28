@@ -15,8 +15,7 @@ const config = defineConfig({
 		[
 			remarkGithub,
 			{
-				// TODO: Replace with your own repository
-				repository: 'https://github.com/mvasigh/sveltekit-mdsvex-blog.git'
+				repository: 'https://github.com/k-tokitoh/blog-svelte.git'
 			}
 		],
 		remarkAbbr
