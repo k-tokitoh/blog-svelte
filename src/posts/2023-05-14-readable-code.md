@@ -1,6 +1,7 @@
 ---
 title: 多重ディスパッチとvisitorパターン
 layout: post
+draft: true
 ---
 
 ちゃんと読んでなかったのでメモする。
