@@ -9,7 +9,7 @@ declare namespace App {
 
 	interface MdsvexFile {
 		default: import('svelte/internal').SvelteComponent;
-		metadata: Record<string, string>;
+		metadata: BlogPost;
 	}
 
 	type MdsvexResolver = () => Promise<MdsvexFile>;
@@ -19,6 +19,6 @@ declare namespace App {
 		title: string;
 		description: string;
 		date: string;
-		published: boolean;
+		draft?: boolean;
 	}
 }
