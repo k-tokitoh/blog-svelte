@@ -5,7 +5,7 @@ test('index page has expected content', async ({ page }) => {
 
 	const articles = await page.$$('article');
 
-	expect(await page.textContent('h1')).toBe('SvelteKit + MDsveX Blog');
+	expect(await page.textContent('h1')).toBe('k-tokitoh');
 	expect(articles.length).toBeGreaterThan(0);
 	expect(articles.length).not.toBeGreaterThan(10);
 	for (const article of articles) {
