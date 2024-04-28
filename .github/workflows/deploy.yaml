@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: 'ap-northeast-1'
+          role-to-assume: 'arn:aws:iam::470855045134:role/blog-svelte'
 
       - run: aws s3 ls s3://blog-svelte
