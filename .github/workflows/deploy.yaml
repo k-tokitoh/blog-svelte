@@ -1,4 +1,4 @@
-name: example
+name: deploy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  s3ls:
+  sync:
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -14,9 +14,16 @@ jobs:
     environment:
       name: production
     steps:
+      - name: checkout
+        uses: actions/checkout@v4
+
       - uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
 
-      - run: aws s3 ls s3://blog-svelte
+      - name: build
+        run: npm run build
+
+      - name: sync
+        run: aws s3 sync build s3://blog-svelte --delete
