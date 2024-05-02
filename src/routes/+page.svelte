@@ -14,10 +14,11 @@
 <p>tiny weblog.</p>
 
 {#each data.posts as { slug, title, date }}
-	<Article>
-		<ArticleTitle {slug} {title} />
+	<Article {slug}>
 		<ArticleMeta {date} />
+		<ArticleTitle {title} />
 	</Article>
+	<hr />
 {/each}
 
 <slot />

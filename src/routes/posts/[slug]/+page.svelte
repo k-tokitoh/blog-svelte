@@ -13,7 +13,7 @@
 </script>
 
 <PageHead title={data.frontmatter.title} />
-<ArticleTitle title={data.frontmatter.title} />
-<ArticleMeta date={data.frontmatter.date} />
+<ArticleMeta date={data.date} />
+<ArticleTitle title={data.frontmatter.title} large={true} />
 
 <svelte:component this={component} />

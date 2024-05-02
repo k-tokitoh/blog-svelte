@@ -1,5 +1,5 @@
 import type { PageLoad } from './$types';
-import { slugFromPath } from '$lib/slugFromPath';
+import { slugFromPath, dateFromPath } from '$lib/slugFromPath';
 import { error } from '@sveltejs/kit';
 
 export const load: PageLoad = async ({ params }) => {
@@ -13,7 +13,8 @@ export const load: PageLoad = async ({ params }) => {
 		}
 	}
 
-	const post = await match?.resolver?.();
+	const { resolver, path } = await match;
+	const post = await resolver?.();
 
 	if (!post || post.metadata.draft) {
 		throw error(404); // Couldn't resolve the post
@@ -21,6 +22,7 @@ export const load: PageLoad = async ({ params }) => {
 
 	return {
 		component: post.default,
-		frontmatter: post.metadata
+		frontmatter: post.metadata,
+		date: path && dateFromPath(path)
 	};
 };
