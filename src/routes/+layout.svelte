@@ -52,4 +52,8 @@
 	footer {
 		margin-top: calc(var(--spacing-unit) * 8);
 	}
+
+	main {
+		overflow-wrap: break-word;
+	}
 </style>
