@@ -9,11 +9,11 @@
 	export let data: PageData;
 </script>
 
-<PageHead title="Home" description="An awesome blog about development with Svelte" />
+<PageHead title="Home" />
 
 <p>tiny weblog.</p>
 
-{#each data.posts as { slug, title, description, date }}
+{#each data.posts as { slug, title, date }}
 	<Article>
 		<ArticleTitle {slug} {title} />
 		<ArticleMeta {date} />

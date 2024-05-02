@@ -12,7 +12,7 @@
 	$: component = data.component as unknown as C;
 </script>
 
-<PageHead title={data.frontmatter.title} description={data.frontmatter.description} />
+<PageHead title={data.frontmatter.title} />
 <ArticleTitle title={data.frontmatter.title} />
 <ArticleMeta date={data.frontmatter.date} />
 
