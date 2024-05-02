@@ -45,6 +45,10 @@ title: ブログをsveltekitに移行した
     - https://github.com/pngwn/mdsvex
     - 活発に利用/メンテされてそうなのでこれでいいんじゃね
 
+できたコードは以下。
+
+https://github.com/k-tokitoh/blog-svelte
+
 # 学び
 
 - 静的サイトホスティングという極めて一般的なケースでも s3 + cloudfront だけでなく cloud front functions でケアする必要などがあるんだな
