@@ -10,7 +10,7 @@ title: ブログをsveltekitに移行した
 
 今回の移行の動機は以下。
 
-- jekyll の liquid template より最近の frontend でつかわれてる技術にしてみようかな
+- jekyll on liquid より最近の js based な frontend でつかわれてる技術にしてみようかな
 - デプロイ周りも github pages とか vercel とかにおまかせしたことしかなかったので、シンプルな静的サイトのホスティングを aws で構成してみるか
 
 移行先の要件は以下。
