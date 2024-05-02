@@ -4,15 +4,30 @@
 	const href = `/posts/${slug}`;
 </script>
 
-<article>
-	<a {href}>
+<a {href}>
+	<article>
 		<slot />
-	</a>
-</article>
+	</article>
+</a>
 
 <style>
 	article {
-		margin-top: calc(var(--spacing-unit) * 7);
-		margin-bottom: calc(var(--spacing-unit) * 8);
+		height: 7rem;
+		margin-top: calc(var(--spacing-unit) * 1);
+		margin-bottom: calc(var(--spacing-unit) * 2);
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		border-radius: 1rem;
+		padding: 0 1rem;
+		transition: all 0.35s ease-in;
+	}
+
+	article:hover {
+		background-color: #ddd;
+	}
+
+	a {
+		text-decoration: none;
 	}
 </style>
