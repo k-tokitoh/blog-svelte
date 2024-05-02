@@ -12,7 +12,7 @@ const config = {
 	preprocess: [vitePreprocess(), mdsvex(mdsvexConfig)],
 
 	kit: {
-		adapter: adapter({ strict: false })
+		adapter: adapter({ strict: true })
 	}
 };
 
