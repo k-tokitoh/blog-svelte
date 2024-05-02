@@ -22,8 +22,8 @@
 
 	:global(body) {
 		margin: 0 auto;
-		max-width: 75ch;
-		padding: calc(var(--spacing-unit) * 8);
+		max-width: 68ch;
+		padding: calc(var(--spacing-unit) * 2.5);
 		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
 			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 		-webkit-font-smoothing: antialiased;

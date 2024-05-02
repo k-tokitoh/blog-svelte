@@ -12,14 +12,14 @@
 
 <style>
 	article {
-		height: 7rem;
+		min-height: 7rem;
 		margin-top: calc(var(--spacing-unit) * 1);
 		margin-bottom: calc(var(--spacing-unit) * 2);
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
 		border-radius: 1rem;
-		padding: 0 1rem;
+		padding: 0 2.2%;
 		transition: all 0.35s ease-in;
 	}
 
