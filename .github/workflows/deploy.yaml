@@ -35,3 +35,6 @@ jobs:
 
       - name: sync
         run: aws s3 sync build s3://blog-svelte --delete
+
+      - name: Clear cache
+        run: aws cloudfront create-invalidation --distribution-id E34RP4S1LYOKLC --paths "/*"
