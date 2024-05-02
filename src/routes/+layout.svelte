@@ -49,6 +49,10 @@
 		font-size: 1.6rem;
 	}
 
+	h1 {
+		margin-bottom: calc(var(--spacing-unit) * 2);
+	}
+
 	footer {
 		margin-top: calc(var(--spacing-unit) * 8);
 	}

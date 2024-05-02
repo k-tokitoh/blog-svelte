@@ -11,7 +11,7 @@
 
 <PageHead title="Home" />
 
-<p>tiny weblog.</p>
+<p class="lead">tiny weblog.</p>
 
 {#each data.posts as { slug, title, date }}
 	<Article {slug}>
@@ -22,3 +22,10 @@
 {/each}
 
 <slot />
+
+<style>
+	.lead {
+		margin-top: calc(var(--spacing-unit) * 2);
+		margin-bottom: calc(var(--spacing-unit) * 12);
+	}
+</style>
