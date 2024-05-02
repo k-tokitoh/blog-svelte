@@ -5,7 +5,6 @@
 	import Article from '$lib/components/Article.svelte';
 	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
 	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
-	import ArticleDescription from '$lib/components/ArticleDescription.svelte';
 
 	export let data: PageData;
 </script>
@@ -18,7 +17,6 @@
 	<Article>
 		<ArticleTitle {slug} {title} />
 		<ArticleMeta {date} />
-		<ArticleDescription {description} {slug} />
 	</Article>
 {/each}
 
