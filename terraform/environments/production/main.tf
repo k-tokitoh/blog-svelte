@@ -54,3 +54,15 @@ module "s3" {
   project     = var.project
   environment = var.environment
 }
+
+module "cloudfront" {
+  source = "../../modules/cloudfront"
+
+  project                     = var.project
+  environment                 = var.environment
+  domain                      = module.route53.domain
+  route53_zone_id             = module.route53.zone_id
+  certificate_arn             = module.acm.certificate_arn
+  s3_bucket                   = module.s3.bucket
+  origin_access_identity_path = module.s3.origin_access_identity_path
+}
