@@ -40,6 +40,14 @@ module "route53" {
   environment = var.environment
 }
 
+module "acm" {
+  source = "../../modules/acm"
+
+  project     = var.project
+  environment = var.environment
+  domain      = module.route53.domain
+}
+
 module "s3" {
   source = "../../modules/s3"
 
