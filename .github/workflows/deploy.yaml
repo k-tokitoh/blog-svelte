@@ -34,7 +34,12 @@ jobs:
         run: npm run build
 
       - name: sync
-        run: aws s3 sync build s3://blog-svelte --delete
+        # terraformでの値と一致している必要あり
+        # build ディレクトリを 指定したバケットにアップロード
+        # --delete で、同期元にないファイルを同期先から削除する
+        run: aws s3 sync build s3://blogsvelte-production-39874962 --delete
 
-      - name: Clear cache
-        run: aws cloudfront create-invalidation --distribution-id E34RP4S1LYOKLC --paths "/*"
+      # キャッシュの無効化
+      # ただしterraformからdistribution_idをもってくるのが面倒なのでいったんコメントアウト（TTLをゼロにしておく）
+      # - name: Clear cache
+      #   run: aws cloudfront create-invalidation --distribution-id {DISTRIBUTION_ID} --paths "/*"
