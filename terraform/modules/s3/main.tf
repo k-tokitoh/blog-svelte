@@ -1,12 +1,3 @@
-resource "random_string" "s3_unique_key" {
-  length = 6
-  # 特殊文字
-  special = false
-  upper   = false
-  lower   = true
-  numeric = false
-}
-
 # ==========================================================================================================================
 # static bucket
 # ==========================================================================================================================
@@ -14,13 +5,22 @@ resource "random_string" "s3_unique_key" {
 # 配信したい静的なファイルを配置する、privateなバケット
 resource "aws_s3_bucket" "default" {
   # バケット名
-  bucket = "${lower(var.project)}-${lower(var.environment)}-${random_string.s3_unique_key.result}"
+  # ユニークにするために末尾にランダムな数字の文字列を付加する
+  bucket = "${lower(var.project)}-${lower(var.environment)}-39874962"
 
   # force_destroy = true にすると、バケットを削除する際に中身があっても削除できる
   # 練習用なので、CIによりデプロイされたファイルが入っていてもterraform destroyで削除できてほしいのでtrueにする
   force_destroy = true
 }
 
+# 以下で「静的ウェブサイトホスティング」ができる（今回はしない）
+# resource "aws_s3_bucket_website_configuration" "default" {
+#   bucket = aws_s3_bucket.default.bucket
+#   index_document {
+#     suffix = "index.html"
+#   }
+# }
+#
 resource "aws_s3_bucket_public_access_block" "default" {
   bucket = aws_s3_bucket.default.bucket
 
