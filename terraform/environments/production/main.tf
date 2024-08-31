@@ -33,6 +33,13 @@ variable "environment" {
 
 # 循環参照にならないように注意
 
+module "route53" {
+  source = "../../modules/route53"
+
+  project     = var.project
+  environment = var.environment
+}
+
 module "s3" {
   source = "../../modules/s3"
 
