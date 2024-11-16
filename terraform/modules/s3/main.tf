@@ -36,27 +36,3 @@ resource "aws_s3_bucket_public_access_block" "default" {
   # 「パブリックアクセスOKだよ」というpolicyが元から存在していた場合、その許可を無視する（パブリックアクセスを禁じる）
   restrict_public_buckets = true
 }
-
-# policyを付与する交差テーブル的なresource
-resource "aws_s3_bucket_policy" "default" {
-  bucket = aws_s3_bucket.default.bucket
-  policy = data.aws_iam_policy_document.static.json
-}
-
-data "aws_iam_policy_document" "static" {
-  # cloudfrontからのアクセスを許可
-  statement {
-    effect = "Allow"
-    principals {
-      type        = "AWS"
-      identifiers = [aws_cloudfront_origin_access_identity.default.iam_arn]
-    }
-    actions   = ["s3:GetObject"]
-    resources = ["arn:aws:s3:::${aws_s3_bucket.default.bucket}/*"]
-  }
-}
-
-# cloudfrontからs3にアクセスする場合にどういう立場でもってアクセスするかを定義する
-resource "aws_cloudfront_origin_access_identity" "default" {
-  comment = "${var.project}-${var.environment}"
-}

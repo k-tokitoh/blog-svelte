@@ -22,11 +22,9 @@ variable "s3_bucket" {
   type = object({
     static = object({
       id                  = string
+      bucket              = string
       reginal_domain_name = string
     })
   })
 }
 
-variable "origin_access_identity_path" {
-  type = string
-}

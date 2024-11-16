@@ -21,9 +21,7 @@ resource "aws_cloudfront_distribution" "default" {
     # ここではbucketのidを利用する
     origin_id = var.s3_bucket.static.id
 
-    s3_origin_config {
-      origin_access_identity = var.origin_access_identity_path
-    }
+    origin_access_control_id = aws_cloudfront_origin_access_control.main.id
   }
 
 
@@ -79,6 +77,39 @@ resource "aws_cloudfront_distribution" "default" {
     ssl_support_method = "sni-only"
   }
 }
+
+# policyを付与する交差テーブル的なresource
+resource "aws_s3_bucket_policy" "default" {
+  bucket = var.s3_bucket.static.bucket
+  policy = data.aws_iam_policy_document.static.json
+}
+
+data "aws_iam_policy_document" "static" {
+  # cloudfrontからのアクセスを許可
+  statement {
+    effect = "Allow"
+    principals {
+      type        = "Service"
+      identifiers = ["cloudfront.amazonaws.com"]
+    }
+    actions   = ["s3:GetObject"]
+    resources = ["arn:aws:s3:::${var.s3_bucket.static.bucket}/*"]
+
+    condition {
+      test     = "StringEquals"
+      variable = "aws:SourceArn"
+      values   = [aws_cloudfront_distribution.default.arn]
+    }
+  }
+}
+
+resource "aws_cloudfront_origin_access_control" "main" {
+  name                              = var.s3_bucket.static.bucket
+  origin_access_control_origin_type = "s3"
+  signing_behavior                  = "always"
+  signing_protocol                  = "sigv4"
+}
+
 
 resource "aws_route53_record" "cloudfront" {
   zone_id = var.route53_zone_id
