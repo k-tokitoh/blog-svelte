@@ -157,3 +157,68 @@ resource "aws_cloudfront_function" "request_handler" {
   runtime = "cloudfront-js-2.0"
   code    = file("${path.module}/src/request-handler.js")
 }
+
+//////// キャッシュ削除のlambda関数
+
+resource "aws_iam_role" "create_invalidation" {
+  name               = "${var.project}=${var.environment}-create_invalidation"
+  assume_role_policy = data.aws_iam_policy_document.assume_create_invalidation.json
+}
+
+data "aws_iam_policy_document" "assume_create_invalidation" {
+  statement {
+    actions = ["sts:AssumeRole"]
+
+    principals {
+      # ユーザーではなくリソースがロールを引き受ける場合は"Service"を指定する
+      type        = "Service"
+      identifiers = ["lambda.amazonaws.com"]
+    }
+  }
+}
+
+resource "aws_iam_role_policy_attachment" "create_invalidation" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudFrontFullAccess"
+  role       = aws_iam_role.create_invalidation.name
+}
+
+locals {
+  create_invalidation_code = templatefile("${path.module}/src/create-invalidation/main.mjs", {
+    cloudfront_distribution_id = aws_cloudfront_distribution.default.id
+  })
+}
+
+data "archive_file" "create_invalidation" {
+  type = "zip"
+  source {
+    content  = local.create_invalidation_code
+    filename = "main.mjs"
+  }
+  output_path = "${path.module}/src/create-invalidation/main.zip"
+}
+
+resource "aws_lambda_function" "create_invalidation" {
+  function_name    = "${var.project}-${var.environment}-create_invalidation"
+  filename         = data.archive_file.create_invalidation.output_path
+  source_code_hash = data.archive_file.create_invalidation.output_base64sha256
+  runtime          = "nodejs20.x"
+  role             = aws_iam_role.create_invalidation.arn
+  # ファイル名がモジュール名になる
+  handler = "main.handler"
+}
+
+resource "aws_lambda_permission" "create_invalidation" {
+  action        = "lambda:InvokeFunction"
+  function_name = aws_lambda_function.create_invalidation.function_name
+  principal     = "s3.amazonaws.com"
+  source_arn    = var.s3_bucket.static.arn
+}
+
+resource "aws_s3_bucket_notification" "create_invalidation" {
+  bucket = var.s3_bucket.static.id
+
+  lambda_function {
+    lambda_function_arn = aws_lambda_function.create_invalidation.arn
+    events              = ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
+  }
+}

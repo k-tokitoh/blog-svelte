@@ -1,3 +1,6 @@
+# 現状の構成であれば、おそらく terraform でコンテンツをアップロードすることも可能
+# しかし本来インフラとコンテンツはライフサイクルが異なるので、両者を分離してコンテンツは　CI > aws cli でアップロードする形とした。
+
 name: deploy
 
 on:
@@ -41,8 +44,3 @@ jobs:
         # build ディレクトリを 指定したバケットにアップロード
         # --delete で、同期元にないファイルを同期先から削除する
         run: aws s3 sync build s3://blogsvelte-production-39874962 --delete
-
-      # キャッシュの無効化
-      # ただしterraformからdistribution_idをもってくるのが面倒なのでいったんコメントアウト（TTLをゼロにしておく）
-      # - name: Clear cache
-      #   run: aws cloudfront create-invalidation --distribution-id {DISTRIBUTION_ID} --paths "/*"
