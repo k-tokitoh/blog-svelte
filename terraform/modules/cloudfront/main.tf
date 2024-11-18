@@ -219,20 +219,3 @@ resource "aws_lambda_function" "create_invalidation" {
   handler = "main.handler"
 }
 
-//// s3のイベントでトリガーする
-
-resource "aws_lambda_permission" "create_invalidation" {
-  action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.create_invalidation.function_name
-  principal     = "s3.amazonaws.com"
-  source_arn    = var.s3_bucket.static.arn
-}
-
-resource "aws_s3_bucket_notification" "create_invalidation" {
-  bucket = var.s3_bucket.static.id
-
-  lambda_function {
-    lambda_function_arn = aws_lambda_function.create_invalidation.arn
-    events              = ["s3:ObjectCreated:*", "s3:ObjectRemoved:*"]
-  }
-}

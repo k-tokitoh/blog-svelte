@@ -4,7 +4,6 @@ output "bucket" {
       id                  = aws_s3_bucket.default.id
       bucket              = aws_s3_bucket.default.bucket
       reginal_domain_name = aws_s3_bucket.default.bucket_regional_domain_name
-      arn                 = aws_s3_bucket.default.arn
     }
   }
 }

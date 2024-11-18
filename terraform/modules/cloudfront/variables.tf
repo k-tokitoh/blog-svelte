@@ -24,7 +24,6 @@ variable "s3_bucket" {
       id                  = string
       bucket              = string
       reginal_domain_name = string
-      arn                 = string
     })
   })
 }
