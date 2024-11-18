@@ -43,14 +43,14 @@ resource "aws_cloudfront_distribution" "default" {
     viewer_protocol_policy = "redirect-to-https"
 
     # 単位は秒
-    # originの値が更新されたら、ただちにキャッシュを破棄する
-    min_ttl = 0
-    # originがCache-ControlヘッダやExpiresヘッダによりTTLの指定をしていなかった場合に適用される
-    # 練習用でデプロイが直ちに反映されてほしいのでゼロで設定する
-    default_ttl = 0
-    # originがCache-ControlヘッダやExpiresヘッダによりTTLを指定していたとしても、max_ttlが経過したらキャッシュを破棄する
-    # 練習用でデプロイが直ちに反映されてほしいのでゼロで設定する
-    max_ttl = 0
+    # originがヘッダによりTTLの指定をしていなかった場合
+    default_ttl = 60 * 60 * 24 * 365
+
+    # originがヘッダによりTTLを指定をしていた場合
+    # originが「キャッシュは60ね」と言っていたとしても、min_ttlが120だったら120までキャッシュする
+    min_ttl = 60 * 60 * 24 * 365
+    # originが「キャッシュは60ね」と言っていたとしても、max_ttlが30だったら30で再リクエストする
+    max_ttl = 60 * 60 * 24 * 365
 
     # コンテンツ圧縮を有効にする
     compress = true
@@ -160,6 +160,8 @@ resource "aws_cloudfront_function" "request_handler" {
 
 //////// キャッシュ削除のlambda関数
 
+//// ロール周り
+
 resource "aws_iam_role" "create_invalidation" {
   name               = "${var.project}=${var.environment}-create_invalidation"
   assume_role_policy = data.aws_iam_policy_document.assume_create_invalidation.json
@@ -182,6 +184,8 @@ resource "aws_iam_role_policy_attachment" "create_invalidation" {
   role       = aws_iam_role.create_invalidation.name
 }
 
+//// ソースコード
+
 locals {
   create_invalidation_code = templatefile("${path.module}/src/create-invalidation/main.mjs", {
     cloudfront_distribution_id = aws_cloudfront_distribution.default.id
@@ -197,6 +201,8 @@ data "archive_file" "create_invalidation" {
   output_path = "${path.module}/src/create-invalidation/main.zip"
 }
 
+//// 関数本体
+
 resource "aws_lambda_function" "create_invalidation" {
   function_name    = "${var.project}-${var.environment}-create_invalidation"
   filename         = data.archive_file.create_invalidation.output_path
@@ -206,6 +212,8 @@ resource "aws_lambda_function" "create_invalidation" {
   # ファイル名がモジュール名になる
   handler = "main.handler"
 }
+
+//// s3のイベントでトリガーする
 
 resource "aws_lambda_permission" "create_invalidation" {
   action        = "lambda:InvokeFunction"
