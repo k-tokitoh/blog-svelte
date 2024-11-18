@@ -179,10 +179,16 @@ data "aws_iam_policy_document" "assume_create_invalidation" {
   }
 }
 
-resource "aws_iam_role_policy_attachment" "create_invalidation" {
+resource "aws_iam_role_policy_attachment" "create_invalidation__cloudfront_fullaccess" {
   policy_arn = "arn:aws:iam::aws:policy/CloudFrontFullAccess"
   role       = aws_iam_role.create_invalidation.name
 }
+
+resource "aws_iam_role_policy_attachment" "create_invalidation__cloudwatchlogs_fullaccess" {
+  policy_arn = "arn:aws:iam::aws:policy/CloudWatchLogsFullAccess"
+  role       = aws_iam_role.create_invalidation.name
+}
+
 
 //// ソースコード
 

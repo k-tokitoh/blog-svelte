@@ -26,7 +26,7 @@ export const handler = async (_event) => {
       }
     }
   }
-  const createCommand = new CreateInvalidationCommand(input)
+  const createCommand = new CreateInvalidationCommand(createInput)
   const createRes = await client.send(createCommand)
   console.info({ createRes })
 };
