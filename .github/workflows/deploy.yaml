@@ -4,6 +4,7 @@
 name: deploy
 
 on:
+  # testとdeployを同一workflow内の別jobとすることも可能だが、今回は別workflowとしている
   workflow_run:
     workflows: [test]
     types: [completed]
@@ -11,7 +12,7 @@ on:
     
 
 jobs:
-  sync:
+  deploy-to-s3:
     runs-on: ubuntu-latest
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     permissions:
@@ -48,11 +49,7 @@ jobs:
         # --delete で、同期元にないファイルを同期先から削除する
         run: aws s3 sync build s3://blogsvelte-production-39874962 --delete
 
-      - name: list functions
-        # terraformで作成したリソースと一致している必要あり
-        run: aws lambda list-functions --region us-east-1
-
-        # キャッシュの無効化
+      # キャッシュの無効化
       - name: Clear cache
         # terraformで作成したリソースと一致している必要あり
         run: aws lambda invoke --region us-east-1 --function-name blogSvelte-production-create_invalidation /dev/stdout
