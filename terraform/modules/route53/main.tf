@@ -6,7 +6,6 @@ locals {
   domain = "k-tokitoh.net"
 }
 
-# READMEに記載のとおり、手動で作成したzoneをimportしてこのリソースとして管理する
 data "aws_route53_zone" "existing" {
   # ドメイン名
   name = local.domain

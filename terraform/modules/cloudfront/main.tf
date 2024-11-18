@@ -1,4 +1,5 @@
 locals {
+  public_domain     = "blog.k-tokitoh.net"
   cloudfront_domain = "blog-svelete-${var.environment}.${var.domain}"
 }
 
@@ -53,6 +54,11 @@ resource "aws_cloudfront_distribution" "default" {
 
     # コンテンツ圧縮を有効にする
     compress = true
+
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.request_handler.arn
+    }
   }
 
   restrictions {
@@ -64,7 +70,7 @@ resource "aws_cloudfront_distribution" "default" {
 
   # どういうドメイン名でのアクセスを受け付けるか
   # route53でcfのドメインに流すだけじゃなくて、受け入れるcfの側でも「どういうドメイン名を起点としたアクセスなら許容する」と指定する必要がある
-  aliases = [local.cloudfront_domain]
+  aliases = [local.cloudfront_domain, local.public_domain]
 
   viewer_certificate {
     acm_certificate_arn      = var.certificate_arn
@@ -76,6 +82,7 @@ resource "aws_cloudfront_distribution" "default" {
     # - static-ip
     ssl_support_method = "sni-only"
   }
+
 }
 
 # policyを付与する交差テーブル的なresource
@@ -129,4 +136,18 @@ resource "aws_route53_record" "cloudfront" {
     zone_id                = aws_cloudfront_distribution.default.hosted_zone_id
     evaluate_target_health = true
   }
+}
+
+resource "aws_route53_record" "public" {
+  zone_id = var.route53_zone_id
+  name    = local.public_domain
+  type    = "CNAME"
+  records = ["blog-svelete-production.${var.domain}"]
+  ttl     = 300
+}
+
+resource "aws_cloudfront_function" "request_handler" {
+  name    = "request_handler"
+  runtime = "cloudfront-js-2.0"
+  code    = file("${path.module}/src/request-handler.js")
 }
