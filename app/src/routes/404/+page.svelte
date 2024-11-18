@@ -7,5 +7,4 @@
 	import Error from '$lib/components/Error.svelte';
 </script>
 
-a
 <Error />
