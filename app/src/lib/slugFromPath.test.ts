@@ -6,7 +6,7 @@ describe('slugFromPath', () => {
 		const cases = [
 			{
 				path: '/foo/bar/test-slug.md',
-				expected: 'test-slug'
+				expected: 'test-slug!!'
 			},
 			{
 				path: '/foo/bar/test-slug.svx',
