@@ -7,22 +7,25 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./app
     steps:
-      - uses: actions/checkout@v4
-      - name: Use Node.js
+      - name: checkout
+        uses: actions/checkout@v4
+
+      - name: setup node
         uses: actions/setup-node@v4
         with:
           node-version: '20.x'
-      - name: Install packages
-        run: npm install
-      - name: Install Playwright
+
+      - name: install packages
+        run: npm ci
+
+      - name: install playwright
         run: npx playwright install
-      - name: Build
-        run: npm run build
-      - name: Test
+
+      - name: test
         run: npm run test
