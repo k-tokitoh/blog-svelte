@@ -26,23 +26,42 @@ jobs:
         uses: actions/cache@v4
         with:
           path: "**/node_modules"
-          key: ${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
+          key: ${{ runner.os }}-node_modules-${{ hashFiles('**/package-lock.json') }}
 
       - name: install packages
         if: steps.cache-packages.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: cache svelte-kit
+        id: cache-svelte-kit
+        uses: actions/cache@v4
+        with:
+          path: "**/.svelte-kit"
+          key: ${{ runner.os }}-svelte-kit-${{ github.sha }}
+    
       - name: cache build
         id: cache-build
         uses: actions/cache@v4
         with:
           path: "**/build"
-          key: ${{ runner.os }}-${{ github.sha }}
+          key: ${{ runner.os }}-build-${{ github.sha }}
 
       - name: build
         if: steps.cache-build.outputs.cache-hit != 'true'
         run: npm run build
       
+      - name: get installed playwright version
+        id: playwright-version
+        run: echo "version=$( npx playwright --version )" >> $GITHUB_OUTPUT
+
+      - name: cache playwright binaries
+        uses: actions/cache@v4
+        id: cache-playwright
+        with:
+          path: ~/.cache/ms-playwright
+          key: '${{ runner.os }}-playwright-${{ steps.playwright-version.outputs.version }}'
+
+      # キャッシュがきくと適宜省略されるのでifは不要
       - name: install playwright
         run: npx playwright install
 
