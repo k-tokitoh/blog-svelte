@@ -32,8 +32,19 @@ jobs:
         if: steps.cache-packages.outputs.cache-hit != 'true'
         run: npm ci
 
+      - name: cache build
+        id: cache-build
+        uses: actions/cache@v4
+        with:
+          path: "**/build"
+          key: ${{ runner.os }}-${{ github.sha }}
+
+      - name: build
+        if: steps.cache-build.outputs.cache-hit != 'true'
+        run: npm run build
+      
       - name: install playwright
         run: npx playwright install
 
       - name: test
-        run: npm run test
+        run: npm run test:ci

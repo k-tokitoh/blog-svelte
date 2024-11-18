@@ -9,8 +9,10 @@
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"test:unit": "vitest",
-		"test:playwright": "playwright test",
+		"test:playwright": "playwright test -c ./playwright-config/default.ts",
+		"test:playwright:ci": "playwright test -c ./playwright-config/ci.ts",
 		"test": "npm run test:unit run && npm run test:playwright",
+		"test:ci": "npm run test:unit run && npm run test:playwright:ci",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
