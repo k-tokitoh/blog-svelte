@@ -33,6 +33,14 @@ variable "environment" {
 
 # 循環参照にならないように注意
 
+module "iam" {
+  source = "../../modules/iam"
+
+  project     = var.project
+  environment = var.environment
+}
+
+
 module "route53" {
   source = "../../modules/route53"
 

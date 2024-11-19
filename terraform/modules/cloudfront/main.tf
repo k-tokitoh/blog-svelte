@@ -163,7 +163,7 @@ resource "aws_cloudfront_function" "request_handler" {
 //// ロール周り
 
 resource "aws_iam_role" "create_invalidation" {
-  name               = "${var.project}=${var.environment}-create_invalidation"
+  name               = "${var.project}-${var.environment}-create_invalidation"
   assume_role_policy = data.aws_iam_policy_document.assume_create_invalidation.json
 }
 
