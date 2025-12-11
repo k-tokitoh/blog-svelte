@@ -15,24 +15,24 @@
 <style>
 	:global(:root) {
 		--spacing-unit: 4px;
-		--color-background: #e5e5e5;
-		--color-text-primary: #212121;
-		--color-text-secondary: #5a5a5a;
+		--color-background: rgb(37, 37, 37);
+		--color-text-primary: oklch(0.985 0 0);
+		--color-text-secondary: oklch(0.708 0 0);
 	}
 
 	:global(body) {
 		margin: 0 auto;
 		max-width: 68ch;
 		padding: calc(var(--spacing-unit) * 2.5);
-		font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu',
-			'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+		font-family: ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+			'Segoe UI Symbol', 'Noto Color Emoji';
 		-webkit-font-smoothing: antialiased;
 		-moz-osx-font-smoothing: grayscale;
 
 		background-color: var(--color-background);
 		color: var(--color-text-primary);
 		line-height: 1.51;
-		font-size: 18px;
+		font-size: 16px;
 	}
 
 	:global(a, a:visited, a:active) {

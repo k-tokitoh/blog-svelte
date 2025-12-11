@@ -3,7 +3,6 @@
 
 	import PageHead from '$lib/components/PageHead.svelte';
 	import Article from '$lib/components/Article.svelte';
-	import ArticleTitle from '$lib/components/ArticleTitle.svelte';
 	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
 
 	export let data: PageData;
@@ -16,7 +15,7 @@
 {#each data.posts as { slug, title, date }}
 	<Article {slug}>
 		<ArticleMeta {date} />
-		<ArticleTitle {title} />
+		<div class="title">{title}</div>
 	</Article>
 	<hr />
 {/each}
@@ -27,5 +26,14 @@
 	.lead {
 		margin-top: calc(var(--spacing-unit) * 2);
 		margin-bottom: calc(var(--spacing-unit) * 12);
+	}
+
+	.title {
+		margin: 0;
+		font-size: 1.3rem;
+	}
+
+	hr {
+		border-color: var(--color-text-secondary);
 	}
 </style>

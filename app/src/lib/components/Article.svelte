@@ -23,10 +23,6 @@
 		transition: all 0.35s ease-in;
 	}
 
-	article:hover {
-		background-color: #ddd;
-	}
-
 	a {
 		text-decoration: none;
 	}
