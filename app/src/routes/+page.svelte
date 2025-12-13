@@ -15,7 +15,7 @@
 {#each data.posts as { slug, title, date }}
 	<Article {slug}>
 		<ArticleMeta {date} />
-		<div class="title">{title}</div>
+		<h3 class="title">{title}</h3>
 	</Article>
 	<hr />
 {/each}

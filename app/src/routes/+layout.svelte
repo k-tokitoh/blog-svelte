@@ -3,7 +3,7 @@
 </script>
 
 <header>
-	<a href="/"><h1 class:small={$page.url.pathname !== '/'}>k-tokitoh</h1></a>
+	<a href="/"><div class:small={$page.url.pathname !== '/'}>k-tokitoh</div></a>
 </header>
 
 <main>

@@ -13,7 +13,7 @@
 </script>
 
 <PageHead title={data.frontmatter.title} />
-<div class="title">{data.frontmatter.title}</div>
+<h1 class="title">{data.frontmatter.title}</h1>
 <ArticleMeta date={data.date} />
 
 <div class="body">
