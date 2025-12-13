@@ -12,7 +12,7 @@
 
 <style>
 	article {
-		min-height: 7rem;
+		min-height: 5rem;
 		margin-top: calc(var(--spacing-unit) * 1);
 		margin-bottom: calc(var(--spacing-unit) * 2);
 		display: flex;

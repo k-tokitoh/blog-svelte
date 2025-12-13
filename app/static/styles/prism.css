@@ -1,0 +1,81 @@
+/* コードブロックとかこっちで指定したらこれは不要そう */
+@import url(https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css) layer(prism);
+
+
+/* zennからとってきた */
+.token.namespace {
+    opacity: .7
+}
+
+.token.cdata,.token.comment,.token.doctype,.token.prolog {
+    color: #94a1b3
+}
+
+.language-css .token.string,.style .token.string,.token.attr-name,.token.boolean,.token.entity,.token.number,.token.operator,.token.string,.token.url {
+    color: #ffc56d
+}
+
+.token.atrule,.token.attr-value,.token.deleted,.token.important,.token.keyword,.token.selector {
+    color: #ff8fa3
+}
+
+.token.inserted {
+    color: #b4ff9b
+}
+
+.token.deleted:not(.prefix) {
+    background: rgba(218,54,50,.2);
+    color: inherit;
+    display: block
+}
+
+.token.prefix {
+    user-select: none
+}
+
+.token.inserted:not(.prefix) {
+    background: rgba(0,146,27,.2);
+    color: inherit;
+    display: block
+}
+
+.token.coord {
+    color: #aad4ff
+}
+
+.token.regex,.token.statement {
+    color: #ffc56d
+}
+
+.token.placeholder,.token.variable {
+    color: #fff
+}
+
+.token.bold,.token.important,.token.statement {
+    font-weight: 700
+}
+
+.token.punctuation {
+    color: #939bc1
+}
+
+.token.entity {
+    cursor: help
+}
+
+.token.italic {
+    font-style: italic
+}
+
+.token.function,.token.property,.token.tag {
+    color: #38c7ff
+}
+
+.token.attr-name {
+    color: #ff8fa3
+}
+
+.token.attr-value,.token.script,.token.script .token.keyword,.token.style {
+    color: #ffc56d
+}
+

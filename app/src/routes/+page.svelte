@@ -26,6 +26,7 @@
 	.lead {
 		margin-top: calc(var(--spacing-unit) * 2);
 		margin-bottom: calc(var(--spacing-unit) * 12);
+		color: var(--color-text-secondary);
 	}
 
 	.title {
@@ -34,6 +35,7 @@
 	}
 
 	hr {
+		border-width: 0.5px;
 		border-color: var(--color-text-secondary);
 	}
 </style>

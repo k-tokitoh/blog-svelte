@@ -5,6 +5,7 @@
 	import PageHead from '$lib/components/PageHead.svelte';
 	import ArticleMeta from '$lib/components/ArticleMeta.svelte';
 
+	// ./page.ts の load() から得られる情報
 	export let data: PageData;
 
 	type C = $$Generic<typeof SvelteComponentTyped<any, any, any>>;
@@ -12,12 +13,20 @@
 </script>
 
 <PageHead title={data.frontmatter.title} />
-<ArticleMeta date={data.date} />
 <div class="title">{data.frontmatter.title}</div>
+<ArticleMeta date={data.date} />
 
-<svelte:component this={component} />
+<div class="body">
+	<svelte:component this={component} />
+</div>
 
 <style>
+	.body :global(h1),
+	.body :global(h2) {
+		font-size: 1.5em;
+		border-bottom: 1px solid var(--color-text-secondary);
+	}
+
 	.title {
 		margin: 0;
 		font-size: 1.6rem;
