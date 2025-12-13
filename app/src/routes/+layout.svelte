@@ -3,7 +3,7 @@
 </script>
 
 <header>
-	<a href="/"><div class:small={$page.url.pathname !== '/'}>k-tokitoh</div></a>
+	<a href="/"><div class="site-name" class:small={$page.url.pathname !== '/'}>k-tokitoh</div></a>
 </header>
 
 <main>
@@ -48,7 +48,14 @@
 		font-weight: 700;
 	}
 
-	.small {
+	.site-name {
+		font-family: 'Limelight', sans-serif;
+
+		color: var(--color-text-secondary);
+		font-size: 2rem;
+	}
+
+	.site-name.small {
 		font-size: 1.6rem;
 	}
 
